@@ -1,0 +1,44 @@
+# Kernel Parameters for ThinkPad X1 Carbon Gen 13 (Lunar Lake)
+#
+# Add these parameters to your bootloader configuration
+# For systemd-boot: /boot/loader/entries/arch.conf
+# For GRUB: /etc/default/grub (GRUB_CMDLINE_LINUX_DEFAULT)
+
+# Basic parameters
+quiet splash
+
+# Intel Graphics optimizations for Lunar Lake
+i915.enable_guc=3
+i915.enable_fbc=1
+i915.fastboot=1
+
+# Power management
+intel_pstate=active
+pcie_aspm=force
+
+# Better suspend/resume
+mem_sleep_default=deep
+
+# Disable watchdog (optional, saves power)
+nowatchdog
+
+# Security (if using Secure Boot)
+# lockdown=confidentiality
+
+# Example full parameter line for systemd-boot:
+# options root=UUID=<your-uuid> rw quiet splash i915.enable_guc=3 i915.enable_fbc=1 i915.fastboot=1 intel_pstate=active pcie_aspm=force mem_sleep_default=deep nowatchdog
+
+# Notes:
+# - i915.enable_guc=3: Enable GuC firmware loading and HuC authentication
+# - i915.enable_fbc=1: Enable framebuffer compression (power saving)
+# - i915.fastboot=1: Skip mode setting at boot when possible
+# - mem_sleep_default=deep: Use deep sleep (S3) instead of s2idle
+# - pcie_aspm=force: Force PCIe Active State Power Management
+# - nowatchdog: Disable NMI watchdog (slight power saving)
+
+# Troubleshooting parameters (try if you have issues):
+# - acpi_backlight=native (if backlight control doesn't work)
+# - acpi_backlight=vendor (alternative backlight method)
+# - acpi_osi=Linux (if ACPI issues occur)
+# - ibt=off (if Bluetooth issues)
+# - pci=nocrs (if PCI issues)

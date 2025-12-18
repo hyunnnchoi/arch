@@ -1,0 +1,29 @@
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+*.o
+*.so
+*.a
+
+# Logs
+*.log
+
+# Package manager
+*.tar.gz
+*.tar.xz
+*.deb
+*.rpm
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# Personal configurations (if any)
+personal/
+private/
