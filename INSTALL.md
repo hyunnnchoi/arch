@@ -363,7 +363,7 @@ sudo systemctl start iwd.service
 
 # Configure NetworkManager to use iwd backend
 sudo mkdir -p /etc/NetworkManager/conf.d
-cat | sudo tee /etc/NetworkManager/conf.d/wifi_backend.conf << EOF
+sudo tee /etc/NetworkManager/conf.d/wifi_backend.conf << EOF
 [device]
 wifi.backend=iwd
 EOF
@@ -408,7 +408,7 @@ sudo pacman -S xf86-input-libinput
 
 # For X11, create config
 sudo mkdir -p /etc/X11/xorg.conf.d
-cat | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf << EOF
+sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf << EOF
 Section "InputClass"
     Identifier "touchpad"
     Driver "libinput"

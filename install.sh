@@ -165,7 +165,9 @@ install_base() {
     
     # Update mirrors
     info "Updating mirrors..."
-    reflector --country US --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist || true
+    read -p "Enter your country code for mirrors (e.g., US, GB, DE) [US]: " COUNTRY
+    COUNTRY=${COUNTRY:-US}
+    reflector --country "$COUNTRY" --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist || true
     
     # Install base packages
     pacstrap /mnt base linux linux-firmware base-devel \
@@ -228,6 +230,9 @@ EOF
     
     # Get root partition UUID
     ROOT_UUID=$(blkid -s UUID -o value "$PART_ROOT")
+    if [ -z "$ROOT_UUID" ]; then
+        error "Failed to get UUID for root partition $PART_ROOT"
+    fi
     
     # Create boot entry
     cat > /mnt/boot/loader/entries/arch.conf << EOF
@@ -335,8 +340,9 @@ install_desktop() {
     case $DE_CHOICE in
         1)
             info "Installing GNOME..."
-            arch-chroot /mnt pacman -S --noconfirm gnome gnome-extra
+            arch-chroot /mnt pacman -S --noconfirm gnome gdm
             arch-chroot /mnt systemctl enable gdm.service
+            info "GNOME core installed. Install gnome-extra later if needed."
             ;;
         2)
             info "Installing KDE Plasma..."
